@@ -15,6 +15,7 @@ namespace WarCardGame.GamingTable
             scoreboard.Add(-1, 0); //number of draw 
         }
 
+        // TODO : if a player never win a game he doesn't appear in the leadeboard at the moment.
         public void AddGameHistory(GameHistory gameHistory)
         {
             histories.Add(gameHistory);
@@ -34,7 +35,7 @@ namespace WarCardGame.GamingTable
             {
                 if (playerId != -1)
                 {
-                    Console.WriteLine(playerId + " : " + scoreboard[playerId]);
+                    Console.WriteLine("Player " + playerId + " : " + scoreboard[playerId]);
                 }
                 else
                 {

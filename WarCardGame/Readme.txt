@@ -22,8 +22,25 @@ Design choices made :
 		- All the cards will be given as fairly as possible between the players. Nonetheless if : (52 % numberOfPlayer != 0), some player will have one more card than other.
 
 
-In order to test the solution in your own application, connect to the interface IGamingTable. Check GamingTableTest for examples.
+In order to test the solution in your own application, connect to the interface IGamingTable. Check GamingTableTest for examples. If you want to test an internal method or classs, add in the csproj the TestClass.
 
 The console application if NOT error proof, if an input is not correct the app will crash.
 To convert user input to cards, a proper DSL should be used. 
 
+
+
+Example of inputs : 
+	- game mode where we select the hand of the players :
+
+1
+3
+5H 6H 7H 8H
+8S 7S 1S 5S
+8C 7C 6C 5C
+
+
+	- game mode where we don't select the hand of the players :
+
+2
+5
+25
