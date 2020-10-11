@@ -5,9 +5,14 @@ VisualStudioVersion = 16.0.30523.141
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WarCardGame", "WarCardGame\WarCardGame.csproj", "{D6FAA983-248D-4040-B760-6F50058F9103}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarCardGameTest", "WarCardGameTest\WarCardGameTest.csproj", "{3223D2FB-3580-4E2E-9B6D-366646951A7D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WarCardGameTest", "WarCardGameTest\WarCardGameTest.csproj", "{3223D2FB-3580-4E2E-9B6D-366646951A7D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{D6FAA983-248D-4040-B760-6F50058F9103} = {D6FAA983-248D-4040-B760-6F50058F9103}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{42CDFB5A-B79A-4157-BB89-B7A93531C106}"
+	ProjectSection(SolutionItems) = preProject
+		Readme.txt = Readme.txt
 	EndProjectSection
 EndProject
 Global

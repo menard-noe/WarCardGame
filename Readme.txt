@@ -1,6 +1,6 @@
-﻿Modelisation of the card game War. 
+Modelisation of the card game War. 
 
-Entrypoint Main located in ConsoleApplication.cs
+Entrypoint Main located in WarCardGame.ConsoleApplication.cs
 If you want to specify cards for the players, the cards have to be to the format : 4C 5H 6S 7H 1D 13D
 With 1 the Ace, 13 the King, 12 The queen and 11 the Jack.
 C = clover
@@ -15,7 +15,7 @@ Design choices made :
 	- The game can end in a draw if all the players have no more cards.
 	- When a player wins a turn, he will earn the pot containing all the cards that were played this turn. Those cards are added in a random order at the bottom of the player deck/hand. 
 	- In the game mode where we select the hand of the players :
-		- The hands haven’t necessarily the same number of cards between each player. Moreover, we don't have to give all the 52 cards.
+		- The hands haven�t necessarily the same number of cards between each player. Moreover, we don't have to give all the 52 cards.
 		- A player can't be given 0 card (otherwise pseudo dsl craches).
 		- The order the cards are given to a player will be maintained (if a player is given 4C 3D, the first card that will be popped from the deck will be the card 4C). The hands are not shuffled at this level.
 	- In the game mode where we don't select the hand of the players : 
