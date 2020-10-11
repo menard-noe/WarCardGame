@@ -1,11 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace WarCardGame.Deck
 {
-    class Deck <Card> 
+    class Deck<Card>
     {
-        List<Card> Cards { get; set; } //TODO linkedlist
+        List<Card> Cards { get; set; }
+
+        public List<Card> generateAllCards() //todo rename
+        {
+            return null; //TODO
+        }
     }
 }

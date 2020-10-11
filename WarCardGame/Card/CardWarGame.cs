@@ -1,14 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace WarCardGame.Card
+﻿namespace WarCardGame.Card
 {
-    class CardWarGame : Card
+    internal class CardWarGame : Card
     {
-        CardWarGame(CardValue cardValue, CardColor cardColor) : base(cardValue, cardColor)
+        internal CardWarGame(CardValue cardValue, CardColor cardColor) : base(cardValue, cardColor)
         {
-            //TODO
+
+        }
+
+        public override int Value()
+        {
+            if (this.cardValue == CardValue.Ace)
+            {
+                return 14;
+            }
+            else
+            {
+                return (int)this.cardValue;
+            }
         }
     }
 }

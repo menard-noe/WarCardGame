@@ -1,14 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace WarCardGame.Card
+﻿namespace WarCardGame.Card
 {
-    abstract class Card
+    internal abstract class Card
     {
-        public Card(CardValue cardValue, CardColor cardColor)
+        protected readonly CardValue cardValue;
+        protected readonly CardColor cardColor;
+        protected Card(CardValue cardValue, CardColor cardColor)
         {
-            //TODO 
+            this.cardValue = cardValue;
+            this.cardColor = cardColor;
+        }
+
+        public static bool operator >(Card a, Card b)
+        {
+            return a.Value() > b.Value();
+        }
+        public static bool operator <(Card a, Card b)
+        {
+            return a.Value() < b.Value();
+        }
+
+        public abstract int Value();
+        public CardColor GetColor()
+        {
+            return this.cardColor;
         }
     }
 }

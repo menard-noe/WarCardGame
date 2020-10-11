@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace WarCardGame.Card
+﻿namespace WarCardGame.Card
 {
-    enum CardColor
+    public enum CardColor
     {
-        //TODO
+        Spade = 'S',
+        Clover = 'C',
+        Heart = 'H',
+        Diamond = 'D'
     }
 }
