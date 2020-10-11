@@ -12,5 +12,8 @@
 		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
 			<_Parameter1>DealerWarGameTest</_Parameter1>
 		</AssemblyAttribute>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+			<_Parameter1>GamingTableTest</_Parameter1>
+		</AssemblyAttribute>
 	</ItemGroup>
 </Project>

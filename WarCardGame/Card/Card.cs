@@ -1,6 +1,10 @@
-﻿namespace WarCardGame.Card
+﻿
+
+using System;
+
+namespace WarCardGame.Card
 {
-    internal abstract class Card
+    public abstract class Card
     {
         protected readonly CardValue cardValue;
         protected readonly CardColor cardColor;
@@ -19,10 +23,29 @@
             return a.Value() < b.Value();
         }
 
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+                return false;
+
+            var b2 = (Card)obj;
+            return (this.cardValue == b2.cardValue && this.cardColor == b2.cardColor);
+        }
+
+        public override int GetHashCode()
+        {
+            return cardValue.GetHashCode() ^ cardColor.GetHashCode();
+        }
+
         public abstract int Value();
         public CardColor GetColor()
         {
             return this.cardColor;
+        }
+
+        public override string ToString()
+        {
+            return this.cardValue.ToString("D") + (char)this.cardColor;
         }
     }
 }

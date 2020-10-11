@@ -2,8 +2,7 @@
 
 namespace WarCardGame.Hand
 {
-    // TODO test methods
-    abstract class Hand<T> where T : Card.Card
+    public abstract class Hand<T> where T : Card.Card
     {
         protected Hand()
         {

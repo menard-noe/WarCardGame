@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "WarCardGame": {
+      "commandName": "Project"
+    },
+    "Debug": {
+      "commandName": "Executable"
+    }
+  }
+}

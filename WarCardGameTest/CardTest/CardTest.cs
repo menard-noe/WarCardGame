@@ -1,10 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using WarCardGame.Card;
 
-namespace WarCardGameTest.Card
+namespace WarCardGameTest.CardTest
 {
     [TestClass]
     public class CardTest

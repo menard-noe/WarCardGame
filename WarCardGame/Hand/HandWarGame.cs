@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using WarCardGame.Card;
 
 namespace WarCardGame.Hand
 {
-    class HandWarGame<T> : Hand.Hand<T> where T : Card.CardWarGame
+    public class HandWarGame<T> : Hand<T> where T : CardWarGame
     {
         private readonly LinkedList<T> Cards; //protected ?
 
@@ -18,8 +20,9 @@ namespace WarCardGame.Hand
             this.Cards.AddLast(card);
         }
 
-        public override void AddCards(List<T> cards) //arraylist ?
+        public override void AddCards(List<T> cards)
         {
+            cards.Shuffle();
             foreach (T card in cards)
             {
                 this.AddCard(card);
@@ -35,12 +38,25 @@ namespace WarCardGame.Hand
 
         public override List<T> GetAllCards()
         {
-            return Cards.ToList();
+            return this.Cards.ToList();
         }
 
         public override bool IsEmpty()
         {
             return this.Cards.Count == 0;
+        }
+
+        public static HandWarGame<CardWarGame> ConvertStringsToCards(List<string> strings) //not safe
+        {
+            HandWarGame<CardWarGame> hand = new HandWarGame<CardWarGame>();
+            foreach (string card in strings)
+            {
+                Enum.TryParse(card.Substring(0, 1), out CardValue value);
+                CardColor color = (CardColor)card.Substring(1, 1)[0];
+
+                hand.AddCard(new CardWarGame(value, color));
+            }
+            return hand;
         }
     }
 }
