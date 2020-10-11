@@ -2,33 +2,38 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using WarCardGame.Hand;
 using WarCardGame.Card;
+using WarCardGame.Hand;
 
-namespace WarCardGame.Dealer
+namespace WarCardGame.Game
 {
-    class DealerWarGame/*<T> where T : Hand.HandWarGame<CardWarGame>*/
+    /***
+     * 
+     * Object representing a single instance of the game War.
+     * 
+     * ***/
+    public class GameWar
     {
-        List<Player> players = new List<Player>();
-        readonly GameHistory gameHistory = new GameHistory(); 
+        List<PlayerWar> players = new List<PlayerWar>();
+        readonly GameHistory gameHistory = new GameHistory();
 
-        public DealerWarGame(HashSet<int> playersId):this(DistributeHands(playersId))
+        public GameWar(HashSet<int> playersId) : this(DistributeHands(playersId))
         {
 
         }
 
-        public DealerWarGame(Dictionary<int, HandWarGame<CardWarGame>> playersIdAndCorrespondingHand) //add player here ?
+        public GameWar(Dictionary<int, HandWarGame<CardWarGame>> playersIdAndCorrespondingHand)
         {
             CheckHandsNoDuplicate(playersIdAndCorrespondingHand.Values.ToList());
             foreach (int playerId in playersIdAndCorrespondingHand.Keys)
             {
-                this.players.Add(new Player(playerId, playersIdAndCorrespondingHand[playerId]));
+                this.players.Add(new PlayerWar(playerId, playersIdAndCorrespondingHand[playerId]));
             }
         }
 
         public GameHistory Play()
         {
-            this.LaunchGame();
+            this.PlayAllTurns();
             return this.gameHistory;
 
         }
@@ -53,20 +58,24 @@ namespace WarCardGame.Dealer
         }
 
 
-        private void LaunchGame() //playGame
+        private void PlayAllTurns()
         {
-            while (true){
+            while (true)
+            {
                 this.RemovePlayerWithNoCardsLeft();
 
-                if (this.DoWeHaveAWinner()){
+                if (this.DoWeHaveAWinner())
+                {
                     this.gameHistory.SetWinner(players[0].GetId());
                     return;
                 }
-                else if (this.DoWeHaveATie()){
+                else if (this.DoWeHaveATie())
+                {
                     this.gameHistory.AddAction("We have a draw, all the players have no card left");
                     return;
                 }
-                else {
+                else
+                {
                     this.PlayNextTurn();
                 }
             }
@@ -74,9 +83,9 @@ namespace WarCardGame.Dealer
 
         private void RemovePlayerWithNoCardsLeft()
         {
-            List<Player> playersWithHandNotEmpty = new List<Player>();
+            List<PlayerWar> playersWithHandNotEmpty = new List<PlayerWar>();
 
-            foreach (Player player in this.players)
+            foreach (PlayerWar player in this.players)
             {
                 if (!player.IsDeckEmpty())
                 {
@@ -89,13 +98,13 @@ namespace WarCardGame.Dealer
             }
 
             this.players = playersWithHandNotEmpty;
-        }        
-        
+        }
+
         private bool DoWeHaveAWinner()
         {
             return this.players.Count == 1;
-        }        
-        
+        }
+
         private bool DoWeHaveATie()
         {
             return this.players.Count == 0;
@@ -106,17 +115,59 @@ namespace WarCardGame.Dealer
         {
             List<CardWarGame> pot = new List<CardWarGame>();
 
-            this.GetWinnerOfTurnAndGiveHimPot(this.players, ref pot);
-            this.gameHistory.increamentNumberOfFolds();
+            this.GetWinnerOfTurnAndGiveHimPot(this.players, pot);
+            this.gameHistory.IncreamentNumberOfFolds();
         }
 
-        private void GetWinnerOfTurnAndGiveHimPot(List<Player> players, ref List<CardWarGame> pot) //ref pas forcement nescessiare ? //add classe arbitre pour gérer le tour ?
+        private void GetWinnerOfTurnAndGiveHimPot(List<PlayerWar> players, List<CardWarGame> pot) //add classe arbitre pour gérer le tour ?
         {
-            List<Player> winners = new List<Player>();
+            List<PlayerWar> winners = this.GetWinnersOfPop(players, pot); //each player pop a card from thei hand, we might end up in a tie so we have multiple winners.          
+
+            if (winners.Count > 1)
+            {
+                this.gameHistory.AddAction("Draw between some players, entering TieBreaker");
+                List<PlayerWar> winnersWithDeckNotEmpty = this.BurnCard(winners, pot); // if deck empty, can't burn card and so the player lose
+                GetWinnerOfTurnAndGiveHimPot(winnersWithDeckNotEmpty, pot); // call the method recursivly to differentiate the winners of the pop
+            }
+            else if (winners.Count == 1)
+            {
+                this.gameHistory.AddAction("Player " + winners[0].GetId() + " won the pot containing cards : " + String.Join(", ", pot)); //only one winner so winners[0] is ok to use
+                winners[0].AddCards(pot);
+            }
+            else //all players lost
+            {
+                Console.Out.WriteLine("No one won the pot");
+            }
+
+        }
+
+        private List<PlayerWar> BurnCard(List<PlayerWar> winners, List<CardWarGame> pot)
+        {
+            List<PlayerWar> winnersWithDeckNotEmpty = new List<PlayerWar>();
+
+            foreach (PlayerWar player in winners)
+            {
+                if (!player.IsDeckEmpty())
+                {
+                    CardWarGame card = player.PopTopCardOfDeck();
+                    pot.Add(card);
+                    winnersWithDeckNotEmpty.Add(player);
+                    gameHistory.AddAction("Player " + player.GetId() + " burned the card " + card);
+                }
+                else
+                {
+                    gameHistory.AddAction(player.GetId() + "has no more card left, he can't burn a card");
+                }
+            }
+            return winnersWithDeckNotEmpty;
+        }
+
+        private List<PlayerWar> GetWinnersOfPop(List<PlayerWar> players, List<CardWarGame> pot)
+        {
             CardWarGame betterCard = null;
+            List<PlayerWar> winners = new List<PlayerWar>();
 
-
-            foreach (Player player in players)
+            foreach (PlayerWar player in players)
             {
                 if (!player.IsDeckEmpty())
                 {
@@ -124,7 +175,8 @@ namespace WarCardGame.Dealer
                     pot.Add(card);
                     this.gameHistory.AddAction("Player " + player.GetId() + " played card " + card);
 
-                    if (betterCard == null){
+                    if (betterCard == null)
+                    {
                         betterCard = card;
                         winners.Add(player);
                     }
@@ -133,7 +185,7 @@ namespace WarCardGame.Dealer
                         switch (CompareCard(betterCard, card))
                         {
                             case -1:
-
+                                // your cart is worse than the betteCard so you're not part of the winners.
                                 break;
                             case 0:
                                 winners.Add(player);
@@ -148,49 +200,15 @@ namespace WarCardGame.Dealer
 
                 }
             }
-
-            if (winners.Count > 1)
-            {
-                List<Player> winnersAmongWinners = new List<Player>();
-                this.gameHistory.AddAction("Draw between some players, entering TieBreaker");
-
-                //burn card
-                foreach (Player player in winners)
-                {
-                    if (!player.IsDeckEmpty())
-                    {
-                        CardWarGame card = player.PopTopCardOfDeck();
-                        pot.Add(card);
-                        winnersAmongWinners.Add(player);
-                        gameHistory.AddAction("Player " + player.GetId() + " burned the card " + card);
-                    }
-                    else
-                    {
-                        gameHistory.AddAction(player.GetId() + "has no more card left, he can't burn a card");
-                    }
-                }
-
-                // TODO refactor
-                GetWinnerOfTurnAndGiveHimPot(winnersAmongWinners, ref pot);
-            }
-            else if (winners.Count == 1)
-            {
-                this.gameHistory.AddAction("Player " + winners[0].GetId() + " won the pot containing cards : " + String.Join(", ", pot));
-                winners[0].AddCards(pot);
-            }
-            else
-            {
-                Console.Out.WriteLine("No one won the pot");
-            }
-
+            return winners;
         }
 
-        private static int CompareCard(CardWarGame a, CardWarGame b)
+        private static int CompareCard(CardWarGame a, CardWarGame b) // return 1 if >, 0 if == and -1 if < 
         {
             if (a > b)
             {
                 return -1;
-            } 
+            }
             else if (a < b)
             {
                 return 1;
@@ -205,11 +223,12 @@ namespace WarCardGame.Dealer
         {
             Dictionary<CardWarGame, bool> cards = new Dictionary<CardWarGame, bool>();
 
-            foreach(HandWarGame<CardWarGame> hand in hands)
+            foreach (HandWarGame<CardWarGame> hand in hands)
             {
                 foreach (CardWarGame card in hand.GetAllCards())
                 {
-                    if (!cards.ContainsKey(card)){
+                    if (!cards.ContainsKey(card))
+                    {
                         cards.Add(card, true);
                     }
                     else

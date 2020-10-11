@@ -1,6 +1,6 @@
 ﻿namespace WarCardGame.Card
 {
-    public enum CardColor
+    public enum CardColorEnum
     {
         Spade = 'S',
         Clover = 'C',

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using WarCardGame.Dealer;
+using WarCardGame.Game;
 
 namespace WarCardGame.GamingTable
 {
@@ -45,7 +45,7 @@ namespace WarCardGame.GamingTable
             Console.WriteLine("Number of parties played : " + numberOfPartiesPlayed);
         }
 
-        public void PrintHistory()
+        public void PrintDetailledHistory()
         {
             foreach (GameHistory gameHistory in histories)
             {

@@ -7,7 +7,7 @@ namespace WarCardGame.Hand
 {
     public class HandWarGame<T> : Hand<T> where T : CardWarGame
     {
-        private readonly LinkedList<T> Cards; //protected ?
+        private readonly LinkedList<T> Cards;
 
         public HandWarGame() : base()
         {
@@ -31,9 +31,16 @@ namespace WarCardGame.Hand
 
         public override T PopTopCard() //check not empty
         {
-            T card = this.Cards.First.Value;
-            this.Cards.RemoveFirst();
-            return card;
+            if (!this.IsEmpty())
+            {
+                T card = this.Cards.First.Value;
+                this.Cards.RemoveFirst();
+                return card;
+            }
+            else
+            {
+                throw new Exception("Hand is empty, can't pop card");
+            }
         }
 
         public override List<T> GetAllCards()
@@ -46,13 +53,13 @@ namespace WarCardGame.Hand
             return this.Cards.Count == 0;
         }
 
-        public static HandWarGame<CardWarGame> ConvertStringsToCards(List<string> strings) //not safe
+        public static HandWarGame<CardWarGame> ConvertStringsToCards(List<string> strings) //not safe, should use a proper DSL
         {
             HandWarGame<CardWarGame> hand = new HandWarGame<CardWarGame>();
             foreach (string card in strings)
             {
-                Enum.TryParse(card.Substring(0, 1), out CardValue value);
-                CardColor color = (CardColor)card.Substring(1, 1)[0];
+                Enum.TryParse(card.Substring(0, 1), out CardValueEnum value);
+                CardColorEnum color = (CardColorEnum)card.Substring(1, 1)[0];
 
                 hand.AddCard(new CardWarGame(value, color));
             }

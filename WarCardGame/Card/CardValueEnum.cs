@@ -1,6 +1,6 @@
 ﻿namespace WarCardGame.Card
 {
-    public enum CardValue
+    public enum CardValueEnum
     {
         Ace = 1,
         Two = 2,

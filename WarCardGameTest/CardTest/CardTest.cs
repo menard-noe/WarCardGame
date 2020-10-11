@@ -9,8 +9,8 @@ namespace WarCardGameTest.CardTest
         [TestMethod]
         public void CardComparisonGreaterThan()
         {
-            CardWarGame a = new CardWarGame(CardValue.Five, CardColor.Clover);
-            CardWarGame b = new CardWarGame(CardValue.Six, CardColor.Spade);
+            CardWarGame a = new CardWarGame(CardValueEnum.Five, CardColorEnum.Clover);
+            CardWarGame b = new CardWarGame(CardValueEnum.Six, CardColorEnum.Spade);
 
             Assert.IsFalse(a > b);
         }
@@ -18,8 +18,8 @@ namespace WarCardGameTest.CardTest
         [TestMethod]
         public void CardComparisonGreaterThan2()
         {
-            CardWarGame a = new CardWarGame(CardValue.Seven, CardColor.Clover);
-            CardWarGame b = new CardWarGame(CardValue.Seven, CardColor.Spade);
+            CardWarGame a = new CardWarGame(CardValueEnum.Seven, CardColorEnum.Clover);
+            CardWarGame b = new CardWarGame(CardValueEnum.Seven, CardColorEnum.Spade);
 
             Assert.IsFalse(a > b);
         }
@@ -27,8 +27,8 @@ namespace WarCardGameTest.CardTest
         [TestMethod]
         public void CardComparisonGreaterThan3()
         {
-            CardWarGame a = new CardWarGame(CardValue.King, CardColor.Clover);
-            CardWarGame b = new CardWarGame(CardValue.Ace, CardColor.Spade);
+            CardWarGame a = new CardWarGame(CardValueEnum.King, CardColorEnum.Clover);
+            CardWarGame b = new CardWarGame(CardValueEnum.Ace, CardColorEnum.Spade);
 
             Assert.IsFalse(a > b);
         }
@@ -36,17 +36,17 @@ namespace WarCardGameTest.CardTest
         [TestMethod]
         public void CardComparisonSmallerThan()
         {
-            CardWarGame a = new CardWarGame(CardValue.Five, CardColor.Clover);
-            CardWarGame b = new CardWarGame(CardValue.Six, CardColor.Spade);
+            CardWarGame a = new CardWarGame(CardValueEnum.Five, CardColorEnum.Clover);
+            CardWarGame b = new CardWarGame(CardValueEnum.Six, CardColorEnum.Spade);
 
             Assert.IsTrue(a < b);
-        }        
-        
+        }
+
         [TestMethod]
         public void CardComparisonSmallerThan2()
         {
-            CardWarGame a = new CardWarGame(CardValue.Seven, CardColor.Clover);
-            CardWarGame b = new CardWarGame(CardValue.Seven, CardColor.Spade);
+            CardWarGame a = new CardWarGame(CardValueEnum.Seven, CardColorEnum.Clover);
+            CardWarGame b = new CardWarGame(CardValueEnum.Seven, CardColorEnum.Spade);
 
             Assert.IsFalse(a < b);
         }

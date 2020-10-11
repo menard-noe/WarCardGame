@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WarCardGame.Dealer
+namespace WarCardGame.Game
 {
     public class GameHistory
     {
-        private readonly Queue<string> actions;
+        private readonly Queue<string> actions; //actions should be object and not string
         private int winnerId;
-        public int numberOfFolds = 0;
+        private int numberOfFolds = 0;
 
         public GameHistory()
         {
@@ -18,8 +18,8 @@ namespace WarCardGame.Dealer
         public void SetWinner(int id)
         {
             this.winnerId = id;
-        }        
-        
+        }
+
         public int GetWinner()
         {
             return this.winnerId;
@@ -30,9 +30,14 @@ namespace WarCardGame.Dealer
             this.actions.Enqueue(action);
         }
 
-        public void increamentNumberOfFolds()
+        public void IncreamentNumberOfFolds()
         {
             this.numberOfFolds += 1;
+        }
+
+        public int GetNumberOfFolds()
+        {
+            return this.numberOfFolds;
         }
 
         public void PrintHistory()

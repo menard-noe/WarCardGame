@@ -1,9 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using WarCardGame.Dealer;
-using WarCardGame.GamingTable;
 using WarCardGame.Card;
+using WarCardGame.Game;
+using WarCardGame.GamingTable;
 using WarCardGame.Hand;
 
 namespace WarCardGameTest.GamingTableTest
@@ -22,9 +22,9 @@ namespace WarCardGameTest.GamingTableTest
 
             int sum = 0;
 
-            foreach(GameHistory gameHistory in tableHistory.GetHistories())
+            foreach (GameHistory gameHistory in tableHistory.GetHistories())
             {
-                sum += gameHistory.numberOfFolds;
+                sum += gameHistory.GetNumberOfFolds();
             }
             Console.WriteLine("Average number of fold per game : " + sum / numberGamesToPlay);
 
@@ -39,25 +39,25 @@ namespace WarCardGameTest.GamingTableTest
             Dictionary<int, HandWarGame<CardWarGame>> players = new Dictionary<int, HandWarGame<CardWarGame>>();
 
             HandWarGame<CardWarGame> Hand1 = new HandWarGame<CardWarGame>();
-            Hand1.AddCard(new CardWarGame(CardValue.Five, CardColor.Clover));
-            Hand1.AddCard(new CardWarGame(CardValue.Six, CardColor.Clover));
-            Hand1.AddCard(new CardWarGame(CardValue.Seven, CardColor.Clover));
-            Hand1.AddCard(new CardWarGame(CardValue.Height, CardColor.Clover));
+            Hand1.AddCard(new CardWarGame(CardValueEnum.Five, CardColorEnum.Clover));
+            Hand1.AddCard(new CardWarGame(CardValueEnum.Six, CardColorEnum.Clover));
+            Hand1.AddCard(new CardWarGame(CardValueEnum.Seven, CardColorEnum.Clover));
+            Hand1.AddCard(new CardWarGame(CardValueEnum.Height, CardColorEnum.Clover));
 
             HandWarGame<CardWarGame> Hand2 = new HandWarGame<CardWarGame>();
-            Hand2.AddCard(new CardWarGame(CardValue.Five, CardColor.Spade));            
-            Hand2.AddCard(new CardWarGame(CardValue.Six, CardColor.Spade));            
-            Hand2.AddCard(new CardWarGame(CardValue.Seven, CardColor.Spade));            
-            Hand2.AddCard(new CardWarGame(CardValue.Height, CardColor.Spade));            
-            
+            Hand2.AddCard(new CardWarGame(CardValueEnum.Five, CardColorEnum.Spade));
+            Hand2.AddCard(new CardWarGame(CardValueEnum.Six, CardColorEnum.Spade));
+            Hand2.AddCard(new CardWarGame(CardValueEnum.Seven, CardColorEnum.Spade));
+            Hand2.AddCard(new CardWarGame(CardValueEnum.Height, CardColorEnum.Spade));
+
             HandWarGame<CardWarGame> Hand3 = new HandWarGame<CardWarGame>();
-            Hand3.AddCard(new CardWarGame(CardValue.Five, CardColor.Heart));
-            Hand3.AddCard(new CardWarGame(CardValue.Six, CardColor.Heart));
-            Hand3.AddCard(new CardWarGame(CardValue.Seven, CardColor.Heart));
-            Hand3.AddCard(new CardWarGame(CardValue.Height, CardColor.Heart));
+            Hand3.AddCard(new CardWarGame(CardValueEnum.Five, CardColorEnum.Heart));
+            Hand3.AddCard(new CardWarGame(CardValueEnum.Six, CardColorEnum.Heart));
+            Hand3.AddCard(new CardWarGame(CardValueEnum.Seven, CardColorEnum.Heart));
+            Hand3.AddCard(new CardWarGame(CardValueEnum.Height, CardColorEnum.Heart));
 
             players.Add(1, Hand1);
-            players.Add(2, Hand2);            
+            players.Add(2, Hand2);
             players.Add(3, Hand3);
 
 
@@ -75,10 +75,10 @@ namespace WarCardGameTest.GamingTableTest
             HandWarGame<CardWarGame> Hand1 = new HandWarGame<CardWarGame>();
 
             HandWarGame<CardWarGame> Hand2 = new HandWarGame<CardWarGame>();
-            Hand2.AddCard(new CardWarGame(CardValue.Five, CardColor.Spade));
-            Hand2.AddCard(new CardWarGame(CardValue.Six, CardColor.Spade));
-            Hand2.AddCard(new CardWarGame(CardValue.Seven, CardColor.Spade));
-            Hand2.AddCard(new CardWarGame(CardValue.Height, CardColor.Spade));
+            Hand2.AddCard(new CardWarGame(CardValueEnum.Five, CardColorEnum.Spade));
+            Hand2.AddCard(new CardWarGame(CardValueEnum.Six, CardColorEnum.Spade));
+            Hand2.AddCard(new CardWarGame(CardValueEnum.Seven, CardColorEnum.Spade));
+            Hand2.AddCard(new CardWarGame(CardValueEnum.Height, CardColorEnum.Spade));
 
             HandWarGame<CardWarGame> Hand3 = new HandWarGame<CardWarGame>();
 
@@ -90,7 +90,7 @@ namespace WarCardGameTest.GamingTableTest
             TableHistory tableHistory = gamingTable.PlayGameWhithGivenHand(players);
             Assert.AreEqual(2, tableHistory.GetHistories()[0].GetWinner());
         }
-        
+
         [TestMethod]
         public void CheckSpecialHands3()
         {

@@ -1,9 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
-using WarCardGame.Dealer;
-using WarCardGame.Hand;
-using WarCardGame.Card;
 using System;
+using System.Collections.Generic;
+using WarCardGame.Card;
+using WarCardGame.Game;
+using WarCardGame.Hand;
 
 namespace WarCardGameTest.DealerTest
 {
@@ -16,15 +16,15 @@ namespace WarCardGameTest.DealerTest
             Dictionary<int, HandWarGame<CardWarGame>> players = new Dictionary<int, HandWarGame<CardWarGame>>();
 
             HandWarGame<CardWarGame> Hand1 = new HandWarGame<CardWarGame>();
-            Hand1.AddCard(new CardWarGame(CardValue.Five, CardColor.Clover));
+            Hand1.AddCard(new CardWarGame(CardValueEnum.Five, CardColorEnum.Clover));
 
             HandWarGame<CardWarGame> Hand2 = new HandWarGame<CardWarGame>();
-            Hand2.AddCard(new CardWarGame(CardValue.Six, CardColor.Spade));
+            Hand2.AddCard(new CardWarGame(CardValueEnum.Six, CardColorEnum.Spade));
 
             players.Add(1, Hand1);
             players.Add(2, Hand2);
 
-            DealerWarGame dealerWarGame = new DealerWarGame(players);
+            GameWar dealerWarGame = new GameWar(players);
 
             dealerWarGame.Play();
             GameHistory history = dealerWarGame.GetHistory();
@@ -37,21 +37,21 @@ namespace WarCardGameTest.DealerTest
             Dictionary<int, HandWarGame<CardWarGame>> players = new Dictionary<int, HandWarGame<CardWarGame>>();
 
             HandWarGame<CardWarGame> Hand1 = new HandWarGame<CardWarGame>();
-            Hand1.AddCard(new CardWarGame(CardValue.Five, CardColor.Clover));
+            Hand1.AddCard(new CardWarGame(CardValueEnum.Five, CardColorEnum.Clover));
 
             HandWarGame<CardWarGame> Hand2 = new HandWarGame<CardWarGame>();
-            Hand2.AddCard(new CardWarGame(CardValue.Five, CardColor.Spade));
+            Hand2.AddCard(new CardWarGame(CardValueEnum.Five, CardColorEnum.Spade));
 
             players.Add(1, Hand1);
             players.Add(2, Hand2);
 
-            DealerWarGame dealerWarGame = new DealerWarGame(players);
+            GameWar dealerWarGame = new GameWar(players);
 
             dealerWarGame.Play();
             GameHistory history = dealerWarGame.GetHistory();
             Assert.AreEqual(-1, history.GetWinner());
-        }        
-        
+        }
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void SameCardInDifferentHandTest()
@@ -59,26 +59,26 @@ namespace WarCardGameTest.DealerTest
             Dictionary<int, HandWarGame<CardWarGame>> players = new Dictionary<int, HandWarGame<CardWarGame>>();
 
             HandWarGame<CardWarGame> Hand1 = new HandWarGame<CardWarGame>();
-            Hand1.AddCard(new CardWarGame(CardValue.Five, CardColor.Spade));
+            Hand1.AddCard(new CardWarGame(CardValueEnum.Five, CardColorEnum.Spade));
 
             HandWarGame<CardWarGame> Hand2 = new HandWarGame<CardWarGame>();
-            Hand2.AddCard(new CardWarGame(CardValue.Five, CardColor.Spade));
+            Hand2.AddCard(new CardWarGame(CardValueEnum.Five, CardColorEnum.Spade));
 
             players.Add(1, Hand1);
             players.Add(2, Hand2);
 
-            DealerWarGame dealerWarGame = new DealerWarGame(players);
+            GameWar dealerWarGame = new GameWar(players);
 
             dealerWarGame.Play();
-        }        
-        
+        }
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void SameCardInDifferentHandTest2()
         {
             Dictionary<int, HandWarGame<CardWarGame>> players = new Dictionary<int, HandWarGame<CardWarGame>>();
 
-            CardWarGame card = new CardWarGame(CardValue.Five, CardColor.Spade);
+            CardWarGame card = new CardWarGame(CardValueEnum.Five, CardColorEnum.Spade);
 
             HandWarGame<CardWarGame> Hand1 = new HandWarGame<CardWarGame>();
             Hand1.AddCard(card);
@@ -89,54 +89,54 @@ namespace WarCardGameTest.DealerTest
             players.Add(1, Hand1);
             players.Add(2, Hand2);
 
-            DealerWarGame dealerWarGame = new DealerWarGame(players);
+            GameWar dealerWarGame = new GameWar(players);
 
             dealerWarGame.Play();
-        }        
-        
+        }
+
         [TestMethod]
         public void TieBreakSameNumberOfCardTest()
         {
             Dictionary<int, HandWarGame<CardWarGame>> players = new Dictionary<int, HandWarGame<CardWarGame>>();
 
             HandWarGame<CardWarGame> Hand1 = new HandWarGame<CardWarGame>();
-            Hand1.AddCard(new CardWarGame(CardValue.Five, CardColor.Spade));
-            Hand1.AddCard(new CardWarGame(CardValue.Three, CardColor.Spade));
-            Hand1.AddCard(new CardWarGame(CardValue.Ace, CardColor.Spade));
+            Hand1.AddCard(new CardWarGame(CardValueEnum.Five, CardColorEnum.Spade));
+            Hand1.AddCard(new CardWarGame(CardValueEnum.Three, CardColorEnum.Spade));
+            Hand1.AddCard(new CardWarGame(CardValueEnum.Ace, CardColorEnum.Spade));
 
             HandWarGame<CardWarGame> Hand2 = new HandWarGame<CardWarGame>();
-            Hand2.AddCard(new CardWarGame(CardValue.Five, CardColor.Clover));
-            Hand2.AddCard(new CardWarGame(CardValue.Ace, CardColor.Clover));
-            Hand2.AddCard(new CardWarGame(CardValue.King, CardColor.Clover));
+            Hand2.AddCard(new CardWarGame(CardValueEnum.Five, CardColorEnum.Clover));
+            Hand2.AddCard(new CardWarGame(CardValueEnum.Ace, CardColorEnum.Clover));
+            Hand2.AddCard(new CardWarGame(CardValueEnum.King, CardColorEnum.Clover));
 
             players.Add(1, Hand1);
             players.Add(2, Hand2);
 
-            DealerWarGame dealerWarGame = new DealerWarGame(players);
+            GameWar dealerWarGame = new GameWar(players);
 
             dealerWarGame.Play();
             GameHistory history = dealerWarGame.GetHistory();
             Assert.AreEqual(1, history.GetWinner());
-        }        
-        
+        }
+
         [TestMethod]
         public void TieBreakNotTheSameNumberOfCardTest()
         {
             Dictionary<int, HandWarGame<CardWarGame>> players = new Dictionary<int, HandWarGame<CardWarGame>>();
 
             HandWarGame<CardWarGame> Hand1 = new HandWarGame<CardWarGame>();
-            Hand1.AddCard(new CardWarGame(CardValue.Five, CardColor.Spade));
-            Hand1.AddCard(new CardWarGame(CardValue.Ace, CardColor.Spade));
+            Hand1.AddCard(new CardWarGame(CardValueEnum.Five, CardColorEnum.Spade));
+            Hand1.AddCard(new CardWarGame(CardValueEnum.Ace, CardColorEnum.Spade));
 
             HandWarGame<CardWarGame> Hand2 = new HandWarGame<CardWarGame>();
-            Hand2.AddCard(new CardWarGame(CardValue.Five, CardColor.Clover));
-            Hand2.AddCard(new CardWarGame(CardValue.Three, CardColor.Clover));
-            Hand2.AddCard(new CardWarGame(CardValue.King, CardColor.Clover));
+            Hand2.AddCard(new CardWarGame(CardValueEnum.Five, CardColorEnum.Clover));
+            Hand2.AddCard(new CardWarGame(CardValueEnum.Three, CardColorEnum.Clover));
+            Hand2.AddCard(new CardWarGame(CardValueEnum.King, CardColorEnum.Clover));
 
             players.Add(1, Hand1);
             players.Add(2, Hand2);
 
-            DealerWarGame dealerWarGame = new DealerWarGame(players);
+            GameWar dealerWarGame = new GameWar(players);
 
             dealerWarGame.Play();
             GameHistory history = dealerWarGame.GetHistory();

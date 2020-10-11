@@ -1,9 +1,9 @@
 ﻿using System;
-using WarCardGame.GamingTable;
-using WarCardGame.Card;
-using WarCardGame.Hand;
 using System.Collections.Generic;
 using System.Linq;
+using WarCardGame.Card;
+using WarCardGame.GamingTable;
+using WarCardGame.Hand;
 
 namespace WarCardGame
 {
@@ -50,7 +50,7 @@ namespace WarCardGame
             IGamingTable gamingTable = new GamingTable.GamingTable();
             TableHistory tableHistory = gamingTable.PlayMultipleGames(numberPlayers, numberGamesToPlay);
 
-            tableHistory.PrintHistory();
+            tableHistory.PrintDetailledHistory();
         }
 
         public static void PlayGameWhithGivenHand() //NOT SAFE AT ALL. If wrong input exceptions not caught at all.
@@ -74,7 +74,7 @@ namespace WarCardGame
             IGamingTable gamingTable = new GamingTable.GamingTable();
             TableHistory tableHistory = gamingTable.PlayGameWhithGivenHand(players);
 
-            tableHistory.PrintHistory();
+            tableHistory.PrintDetailledHistory();
         }
     }
 }

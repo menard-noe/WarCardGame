@@ -5,14 +5,14 @@ namespace WarCardGame.Card
 {
     public class CardWarGame : Card
     {
-        internal CardWarGame(CardValue cardValue, CardColor cardColor) : base(cardValue, cardColor)
+        internal CardWarGame(CardValueEnum cardValue, CardColorEnum cardColor) : base(cardValue, cardColor)
         {
 
         }
 
         public override int Value()
         {
-            if (this.cardValue == CardValue.Ace)
+            if (this.cardValue == CardValueEnum.Ace)
             {
                 return 14;
             }
@@ -25,11 +25,11 @@ namespace WarCardGame.Card
         public static List<CardWarGame> GetAllCardsCombination()
         {
             List<CardWarGame> cards = new List<CardWarGame>();
-            foreach (CardValue cardValue in (CardValue[])Enum.GetValues(typeof(CardValue)))
+            foreach (CardValueEnum cardValue in (CardValueEnum[])Enum.GetValues(typeof(CardValueEnum)))
             {
-                foreach (CardColor cardColor in (CardColor[])Enum.GetValues(typeof(CardColor)))
+                foreach (CardColorEnum cardColor in (CardColorEnum[])Enum.GetValues(typeof(CardColorEnum)))
                 {
-                    cards.Add(new CardWarGame(cardValue, cardColor)); 
+                    cards.Add(new CardWarGame(cardValue, cardColor));
                 }
             }
             return cards;

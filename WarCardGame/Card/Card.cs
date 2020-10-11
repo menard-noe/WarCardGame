@@ -1,14 +1,10 @@
-﻿
-
-using System;
-
-namespace WarCardGame.Card
+﻿namespace WarCardGame.Card
 {
     public abstract class Card
     {
-        protected readonly CardValue cardValue;
-        protected readonly CardColor cardColor;
-        protected Card(CardValue cardValue, CardColor cardColor)
+        protected readonly CardValueEnum cardValue;
+        protected readonly CardColorEnum cardColor;
+        protected Card(CardValueEnum cardValue, CardColorEnum cardColor)
         {
             this.cardValue = cardValue;
             this.cardColor = cardColor;
@@ -38,7 +34,7 @@ namespace WarCardGame.Card
         }
 
         public abstract int Value();
-        public CardColor GetColor()
+        public CardColorEnum GetColor()
         {
             return this.cardColor;
         }
